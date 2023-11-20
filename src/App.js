@@ -99,51 +99,63 @@ const stopSong = () => {
     setArtists(data.artists.items)
   }
 
-  const renderArtists = () => {
-    return artists.map(artist => (
-      <div key={artist.id}>
-        {artist.images.length ? <img width={'50%'} src={artist.images[0].url} alt={artist.name} /> : <div>No Images</div>}
-        {artist.name}
-        <button onClick={() => getTopTracks(artist.id)}>Get Top Track</button>
-        {tracks[artist.id] && (
-  <div>
-    <h4>Top Tracks:</h4>
-    <ul>
-      {tracks[artist.id].map((track, index) => (
-        <li key={index}>
-          <img src={track.image} alt={`${track.name} cover`} />
-          {track.name}
-          <button onClick={() => playSong(track.preview_url)}>Play Track {index + 1}</button>
-        </li>
-      ))}
-    </ul>
+  // Update the renderArtists function
+const renderArtists = () => {
+  return artists.map((artist) => (
+    <div className="artist-container" key={artist.id}>
+      {artist.images.length ? (
+        <img className="artist-image" src={artist.images[0].url} alt={artist.name} />
+      ) : (
+        <div>No Images</div>
+      )}
+      <h3>{artist.name}</h3>
+      <button onClick={() => getTopTracks(artist.id)}>Get Top Tracks</button>
+      {tracks[artist.id] && (
+        <div>
+          <h4>Top Tracks:</h4>
+          <ul className="track-list">
+            {tracks[artist.id].map((track, index) => (
+              <li className="track-item" key={index}>
+                <img src={track.image} alt={`${track.name} cover`} />
+                {track.name}
+                <button className="play-button" onClick={() => playSong(track.preview_url)}>
+                  Play Track {index + 1}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
-        {/* {tracks[artist.id] && <audio src={tracks[artist.id]} controls />} */}
-        {/* <button onClick={() => playSong(artist.id)}>Play Song</button> */}
-        <button onClick={stopSong}>Stop</button>
-      </div>
-    ))
-  }
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>23VIBEZ</h1>
-        {!token ?
-          <a href={`${AUTHEND_POINT}?client_id=${CLIENT_Id}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>
-            Login to Spotify</a>
-          : <button onClick={logout}>Logout</button>}
-        {token ?
-          <form onSubmit={searchArtists}>
-            <input type='text' onChange={e => setSearchKey(e.target.value)} />
-            <button type={'submit'}>search</button>
-          </form> :
-          <h2>Please login</h2>}
-        {renderArtists()}
-      </header>
+      <button onClick={stopSong}>Stop</button>
     </div>
-  );
+  ));
+};
+
+// Update the return statement in the App component
+return (
+  <div className="App">
+    <header>
+      <h1>23VIBEZ</h1>
+      {!token ? (
+        <a href={`${AUTHEND_POINT}?client_id=${CLIENT_Id}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}>
+          Login to Spotify
+        </a>
+      ) : (
+        <button onClick={logout}>Logout</button>
+      )}
+      {token ? (
+        <form onSubmit={searchArtists}>
+          <input type="text" onChange={(e) => setSearchKey(e.target.value)} />
+          <button type={'submit'}>Search</button>
+        </form>
+      ) : (
+        <h2>Please login</h2>
+      )}
+      {renderArtists()}
+    </header>
+  </div>
+);
+
 }
 
 export default App;

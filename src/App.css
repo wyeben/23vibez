@@ -36,3 +36,99 @@
     transform: rotate(360deg);
   }
 }
+
+/* App.css */
+
+/* Body styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #282828;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header styles */
+header {
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+/* Login/logout button */
+button {
+  padding: 8px 16px;
+  margin: 10px;
+  background-color: #1DB954;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #168f3f;
+}
+
+/* Search bar styles */
+form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+input[type='text'] {
+  padding: 8px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+input[type='text']:focus {
+  outline: none;
+  border-color: #1DB954;
+}
+
+/* Artist styles */
+div.artist-container {
+  margin-bottom: 30px;
+}
+
+img.artist-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+ul.track-list {
+  list-style: none;
+  padding: 0;
+}
+
+li.track-item {
+  margin-bottom: 15px;
+}
+
+button.play-button {
+  padding: 6px 12px;
+  background-color: #1DB954;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.play-button:hover {
+  background-color: #168f3f;
+}
