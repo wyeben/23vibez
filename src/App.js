@@ -40,22 +40,50 @@ function App() {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log("Top Tracks Data:", data);
-      setTracks({ ...tracks, [artistId]: data.tracks[0].preview_url });
+      const topTracks = data.tracks.map(track => ({
+        name: track.name,
+        preview_url: track.preview_url,
+        image: track.album.images.length > 0 ? track.album.images[0].url : '' 
+      }));
+      const topTrackUrls = data.tracks.map(track => track.preview_url);
+      setTracks(prevTracks => ({ ...prevTracks, [artistId]: topTracks }));
     } catch (error) {
       console.error("Error fetching tracks: ", error);
     }
   };
+  // const playSong = (trackUrl) => {
+  //   if (trackUrl) {
+  //     const audio = new Audio(trackUrl);
+  //     audio.play();
+  //   } else {
+  //     console.error("Song URL not found");
+  //   }
+  // };
 
-  const playSong = (artistId) => {
-    const songUrl = tracks[artistId];
-    if (songUrl) {
-      const audio = new Audio(songUrl);
+  let currentAudio = null;
+
+const playSong = (trackUrl) => {
+  if (trackUrl) {
+    if (currentAudio) {
+      currentAudio.pause(); 
+    }
+    const audio = new Audio(trackUrl);
+    if (currentAudio !== audio) {
+      currentAudio = audio;
       audio.play();
     } else {
-      console.error("Song URL not found");
+      currentAudio = null;
     }
-  };
+  } else {
+    console.error("Song URL not found");
+  }
+};
+const stopSong = () => {
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio = null;
+  }
+};
 
   const searchArtists = async (e) => {
     e.preventDefault()
@@ -77,8 +105,23 @@ function App() {
         {artist.images.length ? <img width={'50%'} src={artist.images[0].url} alt={artist.name} /> : <div>No Images</div>}
         {artist.name}
         <button onClick={() => getTopTracks(artist.id)}>Get Top Track</button>
-        {tracks[artist.id] && <audio src={tracks[artist.id]} controls />}
-        <button onClick={() => playSong(artist.id)}>Play Song</button>
+        {tracks[artist.id] && (
+  <div>
+    <h4>Top Tracks:</h4>
+    <ul>
+      {tracks[artist.id].map((track, index) => (
+        <li key={index}>
+          <img src={track.image} alt={`${track.name} cover`} />
+          {track.name}
+          <button onClick={() => playSong(track.preview_url)}>Play Track {index + 1}</button>
+        </li>
+      ))}
+    </ul>
+        </div>
+      )}
+        {/* {tracks[artist.id] && <audio src={tracks[artist.id]} controls />} */}
+        {/* <button onClick={() => playSong(artist.id)}>Play Song</button> */}
+        <button onClick={stopSong}>Stop</button>
       </div>
     ))
   }
