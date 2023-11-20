@@ -40,6 +40,7 @@ function App() {
           Authorization: `Bearer ${token}`
         }
       });
+      console.log("Top Tracks Data:", data);
       setTracks({ ...tracks, [artistId]: data.tracks[0].preview_url });
     } catch (error) {
       console.error("Error fetching tracks: ", error);
@@ -76,6 +77,7 @@ function App() {
         {artist.images.length ? <img width={'50%'} src={artist.images[0].url} alt={artist.name} /> : <div>No Images</div>}
         {artist.name}
         <button onClick={() => getTopTracks(artist.id)}>Get Top Track</button>
+        {tracks[artist.id] && <audio src={tracks[artist.id]} controls />}
         <button onClick={() => playSong(artist.id)}>Play Song</button>
       </div>
     ))
