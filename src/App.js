@@ -78,6 +78,12 @@ const playSong = (trackUrl) => {
     console.error("Song URL not found");
   }
 };
+
+const [isGridView, setIsGridView] = useState(false);
+
+const toggleView = () => {
+  setIsGridView(!isGridView);
+};
 const stopSong = () => {
   if (currentAudio) {
     currentAudio.pause();
@@ -99,7 +105,7 @@ const stopSong = () => {
     setArtists(data.artists.items)
   }
 
-  // Update the renderArtists function
+
 const renderArtists = () => {
   return artists.map((artist) => (
     <div className="artist-container" key={artist.id}>
@@ -113,21 +119,27 @@ const renderArtists = () => {
       {tracks[artist.id] && (
         <div>
           <h4>Top Tracks:</h4>
-          <ul className="track-list">
+          <button onClick={toggleView}>
+            {isGridView ? 'Switch to List View' : 'Switch to Grid View'}
+          </button>
+          <ul className={`track-list ${isGridView ? 'track-grid' : ''}`}>
             {tracks[artist.id].map((track, index) => (
               <li className="track-item" key={index}>
-                <img src={track.image} alt={`${track.name} cover`} />
-                {track.name}
-                <button className="play-button" onClick={() => playSong(track.preview_url)}>
-                  Play Track {index + 1}
-                </button>
+                <img className="track-image" src={track.image} alt={`${track.name} cover`} />
+                <div className="track-info">
+                  <div className="track-name">{track.name}</div>
+                  <div className="play-icon" onClick={() => playSong(track.preview_url)}>
+                    ▶️
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
         </div>
       )}
       <button onClick={stopSong}>Stop</button>
-    </div>
+    </div>  
+    
   ));
 };
 
