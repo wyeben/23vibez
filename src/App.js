@@ -143,7 +143,6 @@ const renderArtists = () => {
   ));
 };
 
-// Update the return statement in the App component
 return (
   <div className="App">
     <header>
