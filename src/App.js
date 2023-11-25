@@ -51,14 +51,6 @@ function App() {
       console.error("Error fetching tracks: ", error);
     }
   };
-  // const playSong = (trackUrl) => {
-  //   if (trackUrl) {
-  //     const audio = new Audio(trackUrl);
-  //     audio.play();
-  //   } else {
-  //     console.error("Song URL not found");
-  //   }
-  // };
 
   let currentAudio = null;
 
