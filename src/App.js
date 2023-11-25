@@ -4,7 +4,7 @@ import axios from 'axios';
 
 function App() {
   const CLIENT_Id = '6e21e4fb97b34a1cbda731d0f9957f24';
-  const REDIRECT_URI = 'http://localhost:3000';
+  const REDIRECT_URI = 'https://23vibez.vercel.app';
   const AUTHEND_POINT = 'https://accounts.spotify.com/authorize';
   const RESPONSE_TYPE = 'token';
 
